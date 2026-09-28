@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Docs: Regex Prompt Engineering — Dev</title>
+  <meta name="description" content="Advanced prompt engineering with Regular Expression Token Scanning (RETS): a deterministic, non-neural prompt architecture.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container bar">
+      <a class="brand" href="index.html">Dev<span class="ver">v0.0.1</span></a>
+      <nav aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="docs.html" aria-current="page">Docs</a>
+        <a href="faq.html">FAQ</a>
+        <a href="release-notes.html">Release Notes</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="page-head">
+      <div class="container">
+        <p class="eyebrow">Docs</p>
+        <h1>Advanced Prompt Engineering with Regex Patterns</h1>
+      </div>
+    </div>
+
+    <section>
+      <div class="container prose">
+        <p>When basic string matching cannot capture complex domain semantics, Dev provides a low-overhead heuristic layer known as Regular Expression Token Scanning (RETS).</p>
+        <p>Instead of passing hundreds of words into an attention mask and hoping the model attends to the correct positional embeddings, you compile explicit token matchers directly into deterministic finite automata (DFA).</p>
+
+        <h2>The Architecture of a Non-Neural Prompt</h2>
+        <p>In traditional LLM pipelines, you spend hours tweaking system prompts like:</p>
+        <blockquote>
+          <p>“You are an expert entity extraction agent. Return only valid JSON. If an email address is present, output key 'email', otherwise null. Do not hallucinate.”</p>
+        </blockquote>
+        <p>In Dev, we implement Declarative Lexical Extraction:</p>
+<pre tabindex="0"><code>import { DevExtractor } from "hopefullytypesafe/dev";
+
+// Zero-shot structural extraction via deterministic state transitions
+const EMAIL_SEMANTIC_WEIGHT = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+
+export function extractEntity(payload: string): { email: string | null } {
+  const match = payload.match(EMAIL_SEMANTIC_WEIGHT);
+
+  return {
+    email: match ? match[0] : null // Deterministic fall-through
+  };
+}</code></pre>
+
+        <h2>Tuning Prompt Hyperparameters</h2>
+        <ul>
+          <li><strong>Catastrophic Backtracking Prevention:</strong> Always anchor your expressions using <code>^</code> and <code>$</code> to prevent denial-of-service loops within the DFA.</li>
+          <li><strong>Temperature Adjustment:</strong> There is none. The pattern matches or it does not.</li>
+          <li><strong>Stop Sequences:</strong> Handled natively by the character <code>$</code> or the null terminator <code>\0</code>.</li>
+        </ul>
+
+        <h2>Best Practice: The Hierarchical Semantic Fallback</h2>
+        <p>When natural language intent is ambiguous, chain patterns from highest specificity down to default branch logic:</p>
+<pre tabindex="0"><code>import re
+
+PATTERNS = {
+    "INTENT_REFUND": re.compile(r"\b(refund|money back|chargeback)\b", re.I),
+    "INTENT_UPGRADE": re.compile(r"\b(upgrade|enterprise|scale)\b", re.I),
+}
+
+def resolve_unbounded_prompt(prompt: str) -> str:
+    # Top-priority intent evaluation
+    for intent, pattern in PATTERNS.items():
+        if pattern.search(prompt):
+            return intent
+
+    # Default fall-through: replaces expensive agent reflection cycles
+    return "INTENT_FALLTHROUGH_DEFAULT"</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 Dev. Zero Intelligence.</p>
+      <p>Copy by Gemini Flash. Site built by Claude Sonnet. Models at runtime: zero.</p>
+    </div>
+  </footer>
+</body>
+</html>

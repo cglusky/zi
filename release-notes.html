@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Release Notes v0.0.1 — Dev</title>
+  <meta name="description" content="Dev v0.0.1, The Syntax Revolution: experimental if, else, and switch, plus a cost estimator for deleting your AI middleware.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container bar">
+      <a class="brand" href="index.html">Dev<span class="ver">v0.0.1</span></a>
+      <nav aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="docs.html">Docs</a>
+        <a href="faq.html">FAQ</a>
+        <a href="release-notes.html" aria-current="page">Release Notes</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="page-head">
+      <div class="container">
+        <p class="eyebrow">Release Notes</p>
+        <h1>v0.0.1 — “The Syntax Revolution”</h1>
+      </div>
+    </div>
+
+    <section>
+      <div class="container prose">
+        <p>We are thrilled to announce the inaugural public release of Dev (v0.0.1).</p>
+        <p>Modern engineering stacks have suffered under the weight of non-deterministic, GPU-dependent black boxes. With v0.0.1, we return to foundational computing principles by delivering a next-generation runtime that converts business logic directly into instruction sets your CPU already understood in 1978.</p>
+
+        <h2>What's New</h2>
+        <ul>
+          <li><strong>Native Support for Deterministic Branch Primitives:</strong> Introduced experimental keywords <code>if</code>, <code>else</code>, and <code>switch</code>. These constructs allow engineers to express binary logic paths without transmitting prompts over public HTTP networks.</li>
+          <li><strong>Zero-Weights Architecture:</strong> Reduced binary payload from 140GB of quantized FP16 tensors to a lean 4.2MB compiled executable.</li>
+          <li><strong>Instantaneous Cold Boots:</strong> Eliminated the 45-second CUDA container initialization overhead. Logic branches are now executable within standard thread scheduling intervals (&lt; 2ms).</li>
+          <li><strong>Breaking Changes:</strong>
+            <ul>
+              <li>Deprecated <code>temperature</code>: Logic either evaluates to true or false. Floating-point ambiguity has been removed from control flow.</li>
+              <li>Deprecated <code>top_p</code>: All array iterations now evaluate in chronological index order unless explicitly sorted.</li>
+              <li>Deprecated <code>system_prompt</code>: Replaced with standard inline code comments.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="alt">
+      <div class="container prose">
+        <h2>Interactive Cost Estimator: Middle-Out AI Deletion</h2>
+        <p>Use this formula to calculate your immediate annual runway extension by replacing multi-hop LLM agent orchestrators with local Dev primitives:</p>
+        <p class="formula">Annual Savings = (LLM Calls/Day × Average Cost/Token × 365) + Vector DB Subscriptions − $0.00</p>
+
+        <h3>Live Sandbox Simulator</h3>
+        <form id="estimator" class="estimator" novalidate>
+          <div class="field">
+            <label for="dailyQueries">Daily queries</label>
+            <input id="dailyQueries" name="dailyQueries" type="number" min="0" step="1" value="50000" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="monthlyVectorDbCost">Monthly vector DB cost (USD)</label>
+            <input id="monthlyVectorDbCost" name="monthlyVectorDbCost" type="number" min="0" step="any" value="650" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="avgTokensPerQuery">Average tokens per query</label>
+            <input id="avgTokensPerQuery" name="avgTokensPerQuery" type="number" min="0" step="1" value="800" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="costPer1kTokens">Cost per 1k tokens (USD)</label>
+            <input id="costPer1kTokens" name="costPer1kTokens" type="number" min="0" step="any" value="0.003" inputmode="decimal">
+          </div>
+        </form>
+        <dl class="results" aria-live="polite">
+          <div>
+            <dt>Monthly Burn Eliminated</dt>
+            <dd id="out-monthly">$4,250</dd>
+          </div>
+          <div>
+            <dt>Runway Recaptured</dt>
+            <dd id="out-annual">$51,000/year</dd>
+          </div>
+          <div>
+            <dt>Performance Delta</dt>
+            <dd id="out-latency" class="small">10,000x - 50,000x (Replaced network I/O with L1 Cache)</dd>
+          </div>
+        </dl>
+
+<pre tabindex="0"><code>interface InfrastructureAudit {
+  dailyQueries: number;
+  monthlyVectorDbCost: number;
+  avgTokensPerQuery: number;
+  costPer1kTokens: number;
+}
+
+export function estimateDevSavings(audit: InfrastructureAudit): {
+  monthlyLlmSpend: number;
+  annualSavingsWithDev: number;
+  latencyReductionFactor: string;
+} {
+  const dailyTokenCost = (audit.dailyQueries * audit.avgTokensPerQuery * audit.costPer1kTokens) / 1000;
+  const monthlyLlmSpend = (dailyTokenCost * 30) + audit.monthlyVectorDbCost;
+
+  // Dev requires zero external API subscriptions or persistent cloud indexes
+  const annualSavings = monthlyLlmSpend * 12;
+
+  return {
+    monthlyLlmSpend: Math.round(monthlyLlmSpend),
+    annualSavingsWithDev: Math.round(annualSavings),
+    latencyReductionFactor: "10,000x - 50,000x (Replaced network I/O with L1 Cache)",
+  };
+}
+
+// Example: Mid-sized SaaS processing 50k classification requests per day
+const auditResults = estimateDevSavings({
+  dailyQueries: 50_000,
+  monthlyVectorDbCost: 650,
+  avgTokensPerQuery: 800,
+  costPer1kTokens: 0.003, // Blend of input/output tokens
+});
+
+console.log(`Monthly Burn Eliminated: $${auditResults.monthlyLlmSpend}`);
+console.log(`Runway Recaptured: $${auditResults.annualSavingsWithDev}/year`);
+console.log(`Performance Delta: ${auditResults.latencyReductionFactor}`);</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <div class="container prose">
+        <h2>Calculated Benchmark Results</h2>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Benchmark comparison">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Metric</th>
+                <th scope="col">Legacy Multi-Agent Orchestrator</th>
+                <th scope="col">Dev Linear Compiler</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Average p99 response time</th>
+                <td>1.84s</td>
+                <td>0.00012ms</td>
+              </tr>
+              <tr>
+                <th scope="row">Cloud invoice</th>
+                <td>$4,250/mo</td>
+                <td>$0.00/mo</td>
+              </tr>
+              <tr>
+                <th scope="row">Accuracy</th>
+                <td>93.4% (due to occasional token truncation)</td>
+                <td>100% deterministic accuracy</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 Dev. Zero Intelligence.</p>
+      <p>Copy by Gemini Flash. Site built by Claude Sonnet. Models at runtime: zero.</p>
+    </div>
+  </footer>
+  <script src="assets/estimator.js"></script>
+</body>
+</html>

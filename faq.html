@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FAQ: Vector DBs to HashMaps — Dev</title>
+  <meta name="description" content="Frequently asked questions about migrating from vector databases and RAG pipelines to HashMaps with Dev.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container bar">
+      <a class="brand" href="index.html">Dev<span class="ver">v0.0.1</span></a>
+      <nav aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="docs.html">Docs</a>
+        <a href="faq.html" aria-current="page">FAQ</a>
+        <a href="release-notes.html">Release Notes</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="page-head">
+      <div class="container">
+        <p class="eyebrow">FAQ</p>
+        <h1>Migrating from Vector DBs to HashMaps</h1>
+      </div>
+    </div>
+
+    <section>
+      <div class="container prose">
+        <h2>What is the primary difference between a Vector Embedding Store and a HashMap?</h2>
+        <p>A Vector Database translates high-dimensional text embeddings into arbitrary geometric points in ℝ<sup>1536</sup> space, requiring cosine similarity math, Approximate Nearest Neighbor (ANN) index rebuilding, and a monthly $400 managed infrastructure bill just to locate a record.</p>
+        <p>A HashMap calculates an integer hash of your key in O(1) time and indexes directly into an array bucket in local memory. It does not hallucinate similar keys; it either finds the exact memory address or informs you that it does not exist.</p>
+
+        <h2>How do we handle Semantic Proximity without Cosine Similarity?</h2>
+        <p>In Dev, semantic proximity is replaced by Explicit Key Normalization.</p>
+        <p>Instead of generating a 1536-dimensional dense vector for "User_1234" and calculating Euclidean distance to find related entities, you normalize the string:</p>
+<pre tabindex="0"><code># Before: Pinecone / Qdrant ($400/mo + network hop latency)
+# response = index.query(vector=model.encode("user:1234"), top_k=1)
+
+# After: Dev Zero-Latency Key Resolution ($0/mo, 12 nanoseconds)
+entity_cache = {}
+
+def get_entity_state(raw_key: str) -> dict:
+    canonical_key = raw_key.strip().lower()
+    # O(1) collision-free deterministic lookup
+    return entity_cache.get(canonical_key, {"status": "NOT_FOUND"})</code></pre>
+
+        <h2>What happens to our Retrieval-Augmented Generation (RAG) pipeline?</h2>
+        <p>Your RAG pipeline is deprecated and replaced with Direct Memory Retrieval (DMR).</p>
+        <ul>
+          <li><strong>Chunking Strategy:</strong> No longer required. Store the entire document as a contiguous string.</li>
+          <li><strong>Token Overlap:</strong> Zero.</li>
+          <li><strong>Context Bleed:</strong> Eliminated.</li>
+          <li><strong>Retrieval Overhead:</strong> Direct pointer dereference.</li>
+        </ul>
+<pre tabindex="0"><code>// Legacy RAG pipeline replaced by standard dictionary lookup
+const knowledgeBase = new Map&lt;string, string&gt;();
+
+knowledgeBase.set("return_policy", "30-day full refund with receipt.");
+knowledgeBase.set("support_contact", "support@example.com");
+
+export function retrieveGroundTruth(topic: string): string {
+  // Deterministic Retrieval without embeddings or re-ranking models
+  return knowledgeBase.get(topic) ?? "Topic not found.";
+}</code></pre>
+
+        <h2>Can HashMaps scale horizontally like distributed vector clusters?</h2>
+        <p>Yes, but you will find you rarely need to. A single $20/month cloud instance with 16GB of RAM can store over 50,000,000 key-value pairs without sharding, quantization, or HNSW indexing degradation.</p>
+        <p>If you do exhaust system memory, Dev recommends standard horizontal partitioning—otherwise known as running two servers.</p>
+
+        <h2>How do we calculate our return on investment (ROI)?</h2>
+        <p>Subtract your monthly cloud vector database invoice from zero.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 Dev. Zero Intelligence.</p>
+      <p>Copy by Gemini Flash. Site built by Claude Sonnet. Models at runtime: zero.</p>
+    </div>
+  </footer>
+</body>
+</html>

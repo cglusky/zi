@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dev — Zero Intelligence</title>
+  <meta name="description" content="Dev eliminates GPU latency, hallucination entropy, and token billing by compiling your semantic intent into deterministic CPU register evaluations.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container bar">
+      <a class="brand" href="index.html">Dev<span class="ver">v0.0.1</span></a>
+      <nav aria-label="Primary">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="docs.html">Docs</a>
+        <a href="faq.html">FAQ</a>
+        <a href="release-notes.html">Release Notes</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="hero">
+      <div class="container">
+        <p class="eyebrow">Now in v0.0.1</p>
+        <h1>Introducing Dev: Zero Intelligence</h1>
+        <p class="lead">Dev is the revolutionary orchestration paradigm that eliminates 100% of GPU latency, hallucination entropy, and token billing overhead by compiling your semantic intent directly into deterministic CPU register evaluations.</p>
+        <p class="lead">Why pay $0.03 per 1k tokens for a model to infer what your database already knows? Dev uses breakthrough Linear Branching Logic (LBL) and Static Type Encasement to resolve unbounded runtime ambiguity with O(1) semantic certainty.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="pricing.html">View pricing</a>
+          <a class="btn" href="docs.html">Read the docs</a>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <div class="container">
+        <h2>Core Principles</h2>
+        <div class="cards">
+          <div class="card">
+            <h3>Zero-Entropy Inference Engine</h3>
+            <p>Dev resolves state transitions at compile time using binary logic gates. No temperature tuning, no sampling bias, no vibes.</p>
+          </div>
+          <div class="card">
+            <h3>Deterministic Fallback Routing</h3>
+            <p>When standard semantic flows exit expected boundaries, Dev leverages primitive assertion layers rather than burning credits on soft re-prompting.</p>
+          </div>
+          <div class="card">
+            <h3>Cold-Silicon Native</h3>
+            <p>Runs directly on silicon without CUDA drivers, model weight quantizations, or vector indexing overhead.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2>Implementation Examples</h2>
+
+        <h3>TypeScript: Semantic Text Routing</h3>
+<pre tabindex="0"><code>import { Dev } from "hopefullytypesafe/dev";
+
+interface UserIntent {
+  rawInput: string;
+  normalizedAction: "CHECKOUT" | "CANCEL" | "UNKNOWN";
+}
+
+// Dev compiles natural language uncertainty down to strict algorithmic passes
+export function routeUserIntent(input: string): UserIntent {
+  const normalized = input.trim().toLowerCase();
+
+  // Primary semantic matching layer
+  if (normalized.includes("buy") || normalized.includes("pay")) {
+    return { rawInput: input, normalizedAction: "CHECKOUT" };
+  }
+
+  if (normalized.includes("stop") || normalized.includes("quit")) {
+    return { rawInput: input, normalizedAction: "CANCEL" };
+  }
+
+  // Bounded non-deterministic fall-through (Old-school pattern)
+  return { rawInput: input, normalizedAction: "UNKNOWN" };
+}</code></pre>
+
+        <h3>Python: Dynamic Contextual Classification</h3>
+<pre tabindex="0"><code>from enum import Enum
+from typing import Optional
+
+class RiskTier(Enum):
+    LOW = "low"
+    HIGH = "high"
+    CRITICAL = "critical"
+
+def evaluate_semantic_risk(score: float, manual_override: Optional[bool] = None) -> RiskTier:
+    """
+    Executes a multi-tier neural-free decision graph over runtime telemetry.
+    """
+    if manual_override is not None:
+        # High-priority human-in-the-loop bypass
+        return RiskTier.CRITICAL if manual_override else RiskTier.LOW
+
+    # Micro-tuned threshold boundary evaluation
+    match score:
+        case s if s &lt; 0.2:
+            return RiskTier.LOW
+        case s if 0.2 &lt;= s &lt; 0.8:
+            return RiskTier.HIGH
+        case _:
+            return RiskTier.CRITICAL</code></pre>
+
+        <h3>Go: High-Throughput Semantic Pipeline</h3>
+<pre tabindex="0"><code>package dev
+
+import (
+    "context"
+    "errors"
+    "strings"
+)
+
+type SemanticGateway struct{}
+
+// ClassifyStream streams tokens directly to boolean evaluators
+func (g *SemanticGateway) Route(ctx context.Context, payload string) (string, error) {
+    clean := strings.ToLower(strings.TrimSpace(payload))
+
+    switch {
+    case strings.HasPrefix(clean, "status:"):
+        return "METRICS_HANDLER", nil
+    case strings.HasPrefix(clean, "exec:"):
+        return "PIPELINE_RUNNER", nil
+    default:
+        // Terminal ambiguity resolution without LLM retries
+        return "", errors.New("unresolved_runtime_state: token boundary violation")
+    }
+}</code></pre>
+      </div>
+    </section>
+
+    <section class="alt">
+      <div class="container">
+        <h2>What our customers are saying</h2>
+        <div class="cards">
+          <blockquote>
+            <p>“We were spending $40,000/month sending user IDs to an LLM to decide if a tier was premium or free. With Dev's proprietary <code>if (user.isPremium)</code> primitive, our latency dropped from 840ms to 0.00002ms.”</p>
+            <footer>— Senior Lead Staff Architect at an AI-First FinTech</footer>
+          </blockquote>
+          <blockquote>
+            <p>“Dev made me realize that ninety percent of our agentic workflow was just a nested switch statement wrapped in twenty layers of async Python middleware.”</p>
+            <footer>— Founding Engineer, Stealth Seed Venture</footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 Dev. Zero Intelligence.</p>
+      <p>Copy by Gemini Flash. Site built by Claude Sonnet. Models at runtime: zero.</p>
+    </div>
+  </footer>
+</body>
+</html>
